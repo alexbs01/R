@@ -47,12 +47,12 @@ Existe una gran cantidad de funciones internas que nos permiten utilizar realiza
 
 - **q()**: Para salir del programa.  
 - **ls()**: Lista todas las variables que hay guardas en memoria en ese momento.  
-- **rm(<x>)**: Borra las variables que pongan como argumentos, si ponemos ```rm(list=ls())``` borraremos todas las variables.  
+- **rm(\<x>)**: Borra las variables que pongan como argumentos, si ponemos ```rm(list=ls())``` borraremos todas las variables.  
 - **dir()**: Muestra los directorios que hay en la ubicación en la que se abrió R.  
 - **library()**: Muestra los paquetes que hay disponibles para instalar.  
 - **getwd()**: Muestra la ubicación actual, igual que al ```ls``` de Linux.  
-- **help(<x>)**: Da la ayuda para el comando que se ponga en como argumento.  
-- **demo(<x>)**: Realiza una demostración de lo que pongas como argumento.  
+- **help(\<x>)**: Da la ayuda para el comando que se ponga en como argumento.  
+- **demo(\<x>)**: Realiza una demostración de lo que pongas como argumento.  
 
 -----
 
@@ -101,16 +101,16 @@ if (<condicion>) {
 
 ## Primeras fórmulas de estadística
 
-- **min(<vector>)**: Busca el mínimo de la muestra.  
-- **max(<vector>)**: Busca el máximo de la muestra.
-- **length(<vector>)**: Dice cuantos elementos tiene el vector.
-- **sum(<vector>)**: Suma todos los elementos de la muestra.
-- **prod(<vector>)**: Hace el producto de todos los elementos del vector.
-- **sort(<vector>)**: Ordena todos los elementos del vector.  
-- **mean(<vector>)**: Hace la media aritmética de los elementos del vector que se seleccione.
-- **sd(<vector>)**: Haya la desviación estándar de la muestra (standar deviation).  
-- **var(<vector>)**: Calcula la **cuasi-varianza** de la muestra.  
-- **summary(<vector>)**: Muestra un resumen de la muestra. Este resumen está formado por valor mínimo y máximo, media y mediana y primer y tercer cuartil.  
+- **min(\<vector>)**: Busca el mínimo de la muestra.  
+- **max(\<vector>)**: Busca el máximo de la muestra.
+- **length(\<vector>)**: Dice cuantos elementos tiene el vector.
+- **sum(\<vector>)**: Suma todos los elementos de la muestra.
+- **prod(\<vector>)**: Hace el producto de todos los elementos del vector.
+- **sort(\<vector>)**: Ordena todos los elementos del vector.  
+- **mean(\<vector>)**: Hace la media aritmética de los elementos del vector que se seleccione.
+- **sd(\<vector>)**: Haya la desviación estándar de la muestra (standar deviation).  
+- **var(\<vector>)**: Calcula la **cuasi-varianza** de la muestra.  
+- **summary(\<vector>)**: Muestra un resumen de la muestra. Este resumen está formado por valor mínimo y máximo, media y mediana y primer y tercer cuartil.  
 
 ```R
 # Ejercicio de media
@@ -132,7 +132,7 @@ media(a) # Se realiza la media del vector a utilizando la funcion de arriba
 
 El data frame es una estructura de datos en forma de tabla en la que cada columna representa una variable y cada fila a un individuo. En R existe el comando ```iris```, que muestra una tabla de 150 filas de un estudio realizado a un conjunto de flores de iris.  
 
-- names(<tabla>): Nos permite ver el nombre de las columnas de la tabla.  
-- <tabla>$<columna>: Muestra los datos de esa columna.  
-- str(<tabla>): Muestra un resumen de todas las columnas de la tabla.  
+- names(\<tabla>): Nos permite ver el nombre de las columnas de la tabla.  
+- \<tabla>$\<columna>: Muestra los datos de esa columna.  
+- str(\<tabla>): Muestra un resumen de todas las columnas de la tabla.  
 
