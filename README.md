@@ -6,8 +6,6 @@ R es un lenguaje de programación orientado a objetos que se puede utilizar para
 
 -----
 
-
-
 ## Cosas a recordar
 
 - R *trabaja por defecto en doble precisión* (15 o 16 decimales), pero normalmente solo muestra 6 decimales.  
@@ -136,3 +134,17 @@ El data frame es una estructura de datos en forma de tabla en la que cada column
 - \<tabla>$\<columna>: Muestra los datos de esa columna.  
 - str(\<tabla>): Muestra un resumen de todas las columnas de la tabla.  
 
+## Funciones útiles de R
+
+- **sample()**: Poniendo como parámetro un vector, lo reordenará al azar. Y si le pasamos un número como segundo parámetro, podremos escoger cuantos números queremos que nos muestre.  
+
+  ```r
+  x<-seq(21, 87, lenght=15) # El parámetor length segmenta la secuencia en 15 fragmentos de la misma longitud
+  
+  sample(x, 1) # Output: 35.14286
+  sample(x, 1) # Output: 44.57143
+  sample(x, 1) # Output: 63.42857 77.57143 82.28571
+  # Todos estos valores pertenecen a la secuencie x
+  ```
+
+  

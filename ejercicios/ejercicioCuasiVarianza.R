@@ -1,9 +1,9 @@
 # Ejercicio cuasi-varianza
 
 cuasiVar <- function(vector) {
-  longitud <- length(vector)
-  cuasiVarianza <- (sum(x^2)-longitud*mean(x)^2)/(longitud-1)
-  return(cuasiVarianza)
+    longitud <- length(vector)
+    cuasiVarianza <- (sum(x^2)-longitud*mean(x)^2)/(longitud-1)
+    return(cuasiVarianza)
 }
 x <- 1:11
 
