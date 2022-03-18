@@ -106,7 +106,7 @@ if (<condicion>) {
 - **prod(\<vector>)**: Hace el producto de todos los elementos del vector.
 - **sort(\<vector>)**: Ordena todos los elementos del vector.  
 - **mean(\<vector>)**: Hace la media aritmética de los elementos del vector que se seleccione.
-- **sd(\<vector>)**: Haya la desviación estándar de la muestra (standar deviation).  
+- **sd(\<vector>)**: Haya la desviación estándar de la muestra (standar desviation).  
 - **var(\<vector>)**: Calcula la **cuasi-varianza** de la muestra.  
 - **summary(\<vector>)**: Muestra un resumen de la muestra. Este resumen está formado por valor mínimo y máximo, media y mediana y primer y tercer cuartil.  
 
@@ -144,7 +144,50 @@ El data frame es una estructura de datos en forma de tabla en la que cada column
   sample(x, 1) # Output: 35.14286
   sample(x, 1) # Output: 44.57143
   sample(x, 1) # Output: 63.42857 77.57143 82.28571
-  # Todos estos valores pertenecen a la secuencie x
+  # Todos estos valores pertenecen a la secuencia x
   ```
 
-  
+
+## Práctica 2, R-Commander
+
+### Ejercicio 1, Crear una nueva columna
+
+Esta nueva columna de la tabla top500, será el logaritmo neperiano de la columna RPeak.  
+
+```R
+top500$LogRPeak <- log(top500$RPeak) # Podemos hacer una operación a una columna ya existente y guarda el resultado de esta en una variabe nueva, que será una columna nueva.
+```
+
+-----
+
+Con el comando ```str(tabla)``` podremos un resumen distinto al hecho por ```summary()``` donde se nos mostrará con que tipo de dato se guardaron las columnas, si como Integer, Numeric, Factor... Estos tipos de datos se pueden cambiar   a tipo Factor en: *Datos > Modificar variables del conjunto de datos activo > Convertir variable numérica en factor*  
+
+Una función útil para **saber todos los posibles valores de una columna** de tipo **Factor**, es la función ```levels(tablas$columnaTipoFactor)``` 
+
+La función ```table(tabla$columna)``` **nos permite hacer un recuento de todos los valores comunes** para saber en que cantidad se repiten. Por ejemplo, usando esta función con la columna de *Familia*, nos recontará cuantas veces se repite cada elemento que conforma dicha columna.  
+
+### Representaciones gráficas
+
+#### Diagrama de sectores
+
+Un **diagrama de sectores** (circular y con cortes como si fuera un bizcocho) se crea con la función ```pie()```.  
+
+El primer parámetro hace el recuento de cuantos elementos hay de cada Familia, el parámetro **labels** asigna las etiquetas que identificarán cada sector. El parámetro **main** sirve para escribir un nombre identificativo al diagrama, y por último, el parámetro **col** nos permite asignar colores, en este caso se utiliza junto con la función ```rainbow()``` para que se seleccionen los colores más distintos posibles, en función del número de intervalos que le asignemos, que en este caso será la cantidad de elementos distintos que conforman la columna *Familia*.  
+
+```R
+pie(table(top500$Familia), labels=levels(top500$Familia), main="Familia", col=rainbow(length(levels(top500$Familia))))
+```
+
+#### Diagrama de barras
+
+Un diagrama de barras se puede crear con la función ```barplot()```.  
+
+Al igual que con el diagrama de sectores, el primer parámetro es para que haga el recuento de los elementos que queremos representar. A continuación, los parámetros **xlab** e **ylab**, nos permiten asignar un nombre al eje x y al eje y para indicar a que se corresponden los datos de cada eje. Y por último, y de la misma forma que antes, el parámetro **col** para asignar colores a cada barra.  
+
+```R
+barplot(table(top500$Familia), xlab="Familia", ylab="Frequency", col=rainbow(length(levels(top500$Familia))))
+
+```
+
+
+
