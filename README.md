@@ -166,13 +166,13 @@ Una función útil para **saber todos los posibles valores de una columna** de t
 
 La función ```table(tabla$columna)``` **nos permite hacer un recuento de todos los valores comunes** para saber en que cantidad se repiten. Por ejemplo, usando esta función con la columna de *Familia*, nos recontará cuantas veces se repite cada elemento que conforma dicha columna.  
 
-### Representaciones gráficas
+### Representaciones gráficas de variable cualitativas
 
 #### Diagrama de sectores
 
 Un **diagrama de sectores** (circular y con cortes como si fuera un bizcocho) se crea con la función ```pie()```.  
 
-El primer parámetro hace el recuento de cuantos elementos hay de cada Familia, el parámetro **labels** asigna las etiquetas que identificarán cada sector. El parámetro **main** sirve para escribir un nombre identificativo al diagrama, y por último, el parámetro **col** nos permite asignar colores, en este caso se utiliza junto con la función ```rainbow()``` para que se seleccionen los colores más distintos posibles, en función del número de intervalos que le asignemos, que en este caso será la cantidad de elementos distintos que conforman la columna *Familia*.  
+El primer parámetro hace el recuento de cuantos elementos hay de cada Familia, el parámetro **labels** asigna las etiquetas que identificarán cada sector utilizando la función ```levels()``` que devuelve los valores de columna. El parámetro **main** sirve para escribir un nombre identificativo al diagrama, y por último, el parámetro **col** nos permite asignar colores, en este caso se utiliza junto con la función ```rainbow()``` para que se seleccionen los colores más distintos posibles, en función del número de intervalos que le asignemos, que en este caso será la cantidad de elementos distintos que conforman la columna *Familia*.  
 
 ```R
 pie(table(top500$Familia), labels=levels(top500$Familia), main="Familia", col=rainbow(length(levels(top500$Familia))))
@@ -186,8 +186,100 @@ Al igual que con el diagrama de sectores, el primer parámetro es para que haga 
 
 ```R
 barplot(table(top500$Familia), xlab="Familia", ylab="Frequency", col=rainbow(length(levels(top500$Familia))))
+```
 
+-----
+
+### Representaciones gráficas de variables continuas
+
+#### Histograma
+
+Para variables continuas lo más cómodo para representarlas en lugar de un diagrama de barras, es con un histograma en el que cada barra que lo forma se corresponde con un intervalo de todos los posibles valores que puede tener esa variables.
+
+El primer parámetro se utiliza para indicar que columna vamos a representar. La variable **scale** para indicar si el eje  OY será para representar la densidad de la muestra o su frecuencia ("density" o "frequency"). **Breaks**, para especificar el número de intervalos que queremos en el histograma, en esta variables puede haber un número para indicar la cantidad de intervalos, o la cadena de texto *Sturges* para que los calcule R y ponga el número de intervalos que considere más oportuno. Y por último, las variables **col**, **xlab** e **ylab** tienen la misma utilidad que en los diagramas de variables cualitativas. Existe el parámetro **groups**, que permite agrupar variables en función a otra, por ejemplo, ver la frecuencia de los ordenadores por año.  
+
+```R
+Hist(top500$Frecuencia, scale="density", breaks="Sturges", col="pink", xlab="Frecuencias", ylab="Densidad")
+# Existe otra funcion para histogramas que se llama "hist()" que funciona parecido
 ```
 
 
 
+#### Diagrama de cajas
+
+Los diagramas de cajas son representaciones de datos continuos en los que podemos observar la simetría de los datos respecto a la media, y también los datos atípicos (los que son muy distantes a la media).  
+
+Para hacer este tipo de diagramas se hace con la función ```boxplot()```. En el primer parámetro le indicamos que variables queremos analizar, y con **ylab** le pondremos un título al eje OY.  
+
+Con la segunda forma de representación que está debajo, ganamos que haga el mismo análisis de antes pero en función de la *Familia* agrupándolos según corresponda. Para estos análisis se hace, **variableContinua~Grupo**, también los parámetros de **ylab** y **xlab** tienen la utilidad de siempre. Pero existe uno nuevo que realmente se puede omitir, **data** sirve para indicar en que tabla o donde están los datos que vamos a utilizar y así evitar tener que poner junto al nombre de cada columna a que tabla pertenece.
+
+```R
+boxplot(top500$Frecuencia, ylab="Frecuencia")
+boxplot(Frecuencia~Familia, ylab="Frecuencia", xlab="Familia", data=top500) # Sin "data=top500", habria que poner "top500$Frecuencia~top500$Familia"
+```
+
+### Ejercicio 3
+
+1. Estudio numérico y gráfico de **RMax** y **RPeak**.  
+
+   ```R
+   numSummary(top500$RPeak/top500$RMax)
+   # mean        sd       IQR       0%      25%      50%      75%     100%   n
+   # 1.537577 0.3817531 0.6652334 1.038919 1.214969 1.443406 1.880203 5.491751 500
+   
+   Hist(top500$RPeak/top500$RMax, scale="frequency", breaks="Sturges")
+   ```
+
+   Con este análisis podremos ver que el rendimiento teórico es de media 1,53 veces superior al máximo alcanzado. En este caso como realicé una división entre el teórico y el máximo, los valores muy superiores al 1, significan que el teórico era demasiado alto o el máximo fue demasiado bajo. En cambio, un valor inferior a 1 indicaría que el valor máximo superó al valor teórico. Haciendo ```sum(top500$RPeak/top500$RMax < 1)``` observaremos que no existe ningún ordenador en el que el valor teórico sea inferior al máximos alcanzado.  
+
+1. Compara los **RMax** y **RPeak** teniendo en cuenta la **familia** de procesadores.  
+
+   ```R
+   boxplot(top500$RMax~top500$Familia, ylab="frequency", xlab="Familia")
+   boxplot(top500$RPeak~top500$Familia, ylab="frequency", xlab="Familia")
+   ```
+
+1.  ¿Cómo se comporta la **frecuencia** del procesador **a lo largo de los años 2005 a 2010**? Estudia la frecuencia del procesador respecto a la variable Año.
+
+   ```R
+   boxplot(Frecuencia~Año, ylab="Frecuencia", xlab="Familia", data=top500)
+   ```
+
+### Ejercicio 4
+
+1. Cargar fichero Internet.RData
+
+1.  Estudia el **tipo de variables** que hay en el fichero: **factor** (variables cualitativas), **numéricas** (variables cuantitativas).  
+
+   ```R
+   summary(Internet)
+   str(Internet)
+   ```
+
+1. De acuerdo a lo visto en esta práctica, haz un estudio estadístico (numérico y gráfico) de las siguientes variables: **Sexo**, **Estatura**, **Equipo**, **AñosInternet**, **RedSocial**
+
+   ```R
+   # Analisis numerico
+   summary(Internet$Sexo)
+   numSummary(Internet$Estatura)
+   summary(Internet$Equipo)
+   numSummary(Internet$AnosInternet) # La 'ñ' se sustituye por la 'n'
+   summary(Internet$RedSocial)
+   
+   # Analisis grafico
+   pie(table(Internet$Sexo), labels=levels(Internet$Sexo), main="Sexo", col=rainbow(length(levels(Internet$Sexo))))
+   Hist(Internet$Estatura, breaks="Sturges")
+   barplot(table(Internet$Equipo), xlab="Frecuencia", ylab="Equipos", col=rainbow(length(levels(Internet$Equipo))))
+   Hist(Internet$AnosInternet, breaks="Sturges")
+   barplot(table(Internet$RedSocial), xlab="Frecuencia", ylab="Red Social", col=rainbow(length(levels(Internet$RedSocial))))
+   ```
+
+1. Haz un estudio estadístico completo de las siguiente variables, teniendo en cuenta los grupos de otra variable por la que puede ser interesante hacer el estudio: (**Estatura-Sexo**), (**Edad-RedSocial**), (**AñosInternet-Equipo**)
+
+   ```R
+   boxplot(Estatura~Sexo, ylab="Altura", xlab="Sexo", data=Internet)
+   boxplot(Edad~RedSocial, ylab="Edad", xlab="Red Social", data=Internet)
+   boxplot(AnosInternet~Equipo, ylab="Años Internet", xlab="Equipo", data=Internet)
+   ```
+
+   
