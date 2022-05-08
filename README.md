@@ -143,9 +143,25 @@ El data frame es una estructura de datos en forma de tabla en la que cada column
   
   sample(x, 1) # Output: 35.14286
   sample(x, 1) # Output: 44.57143
-  sample(x, 1) # Output: 63.42857 77.57143 82.28571
+  sample(x, 3) # Output: 63.42857 77.57143 82.28571
   # Todos estos valores pertenecen a la secuencia x
   ```
+
+- **choose(n, k)**: Permite hacer el número combinatorio de "n sobre k". Esta ecuación en LaTeX se puede copiar y pegar en una página que sí lo soporte para verla con mayor claridad.  
+  $$
+  \binom{n}{k} = C_{n,k} = \frac{V_{n,k}}{P_k} = \frac{n(n-1)\dots(n-k+1)}{k!} = \frac{n!}{k!(n-k)!}
+  $$
+
+- **dbinom(x, n, p)**: Se utiliza para conocer la probabilidad de una variable aleatoria en una distribución normal, **n** es el número de experimentos, **p** la probabilidad de que ocurra un suceso y **x** el número de sucesos que del que queremos obtener el porcentaje. En la x se puede combinar con secuencias de números como ```x:y``` para saber que probabilidad hay de que suceda el experimento entre *x* e *y* veces.  
+
+  ```R
+  # B(20, 0.15)
+  # P(X = 5)
+  dbinom(5, 20, 0.15)
+  # Output: 0.1028452
+  ```
+
+  
 
 
 ## Práctica 2, R-Commander
@@ -283,3 +299,77 @@ boxplot(Frecuencia~Familia, ylab="Frecuencia", xlab="Familia", data=top500) # Si
    ```
 
    
+
+## Práctica 4, variables aleatorias
+
+### Tipos de distribuciones utilizadas en clase
+
+|   Distribución    | Instrucción  |
+| :---------------: | :----------: |
+|     Binomial      | ```binom```  |
+| Binomial negativa | ```nbinom``` |
+|      Poisson      |  ```pois```  |
+|     Uniforme      |  ```unif```  |
+|    Exponencial    |  ```exp```   |
+|      Normal       |  ```norm```  |
+
+-----
+
+### Prefijos para las distribuciones
+
+|       Aplicación        | Prefijo |
+| :---------------------: | :-----: |
+|        Densidad         |    d    |
+| Función de distribución |    p    |
+|         Cuantil         |    q    |
+|    Muestra aleatoria    |    r    |
+
+-----
+
+### Como afecta el prefijo al tipo de distrubución
+
+|        Prefijo         |                Discreta                 |                Continua                 |
+| :--------------------: | :-------------------------------------: | :-------------------------------------: |
+| dnombre(x, parámetros) |                $P(X=x)$                 |                 $f(x)$                  |
+| pnombre(x, parámetros) | $P(X \leq x)= \sum_{x_i\leq x}P(X=x_i)$ | $P(X \leq x)= \int_{-\infty}^{x}f(t)dt$ |
+| qnombre(p, parámetros) |                  $q_p$                  |                  $q_p$                  |
+
+-----
+
+#### Ejercicio 4.2.1
+
+```r
+dbinom(0, 10, 0.7)
+pbinom(3, 10, 0.7)
+pbinom(2, 10, 0.7)
+qbinom(c(0.25, 0.5, 0.75), 100, 0.05)
+pnbinom(3, 10, 0.8)-pnbinom(1, 10, 0.8)
+pnbinom(4, 10, 0.8)-pnbinom(0, 10, 0.8)
+qnbinom(0.5, 10, 0.8)
+dpois(0, 3)
+ppois(3, 3, FALSE)
+```
+
+-----
+
+## En resumen
+
+Aquí un resumen de como es la sintaxis de los comandos más importantes a la hora de hacer las distribuciones más típicas. También, hay que recordar que en las funciones que tienen el prefijo **d**, son para **probabilidades puntuales**, pero si queremos que haga una probabilidad sumando todos los casos posibles hasta el número deseado de éxitos, podemos sustituir este prefijo por la letra **p**, que calcula la **probabilidad acumulada**.  
+
+Si no queremos utilizar este sufijo **p**, también podemos utilizar la función ```sum()``` para sumar un intervalo, como por ejemplo en una binomial desde 4 hasta 8 haciendo con 10 experimentos y 0.65 de éxito: ```sum(dbinom(4:8, 10, 0.65))```. Esto es solo para las distribuciones de variables aleatorias discretas, ya que para las continuas no queda más remedio que utilizar el prefijo **p**, ya que con el otro solo devuelve la altura de la función de probabilidad en ese punto.
+
+- Distribución binomial
+  - ```dbinom(NumExitos, NumPruebas, ProbExito)```
+  - ```qbinom(Cuantil, NumPreubas, ProbExito)```
+- Distribución binomial negativa
+  - ```dnbinom(NumExitosAntesDe, NumDeFallos, ProbExito)```
+  - ```qnbinom(Cuantil, NumDeFallos, ProbExito)```
+- Distribución de Poisson
+  - ```dpois(NumExitos, lambda)```
+  - ```qpois(Cuantil, lambda)```
+- Distribución exponencial
+  - ```pexp(NumExitos, lambda)```
+  - ```dexp(Cuantil, lambda)```
+- Distribución normal
+  - ```pnorm(NumExitos, Media, DesviacionTipica)```
+  - ```qnorm(Cuantil, Media, DesviacionTipica)```
